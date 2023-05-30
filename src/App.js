@@ -1,14 +1,23 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import boxes from "./boxes";
 import Box from "./components/Box";
 
 function App() {
-  const [squares, setsquares] = React.useState(boxes);
+  const [squares, setSquares] = React.useState(boxes);
+
+  function toggle(id) {
+    setSquares((prevSqaures) => {
+      return prevSqaures.map((sqaure) => {
+        return sqaure.id === id ? { ...sqaure, on: !sqaure.on } : sqaure;
+      });
+    });
+  }
 
   const sqaureElements = squares.map((sqaure) => {
-    return <Box key={sqaure.id} id={sqaure.id} on={sqaure.on} />;
+    return (
+      <Box key={sqaure.id} id={sqaure.id} on={sqaure.on} toggle={toggle} />
+    );
   });
 
   return <div>{sqaureElements}</div>;
